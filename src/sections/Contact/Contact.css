@@ -1,0 +1,578 @@
+/* ============================================
+   CONTACT SECTION
+   ============================================ */
+
+.contact-section {
+  position: relative;
+  width: 100%;
+  padding: 8rem 2rem 6rem;
+  overflow: hidden;
+  background: transparent;
+  isolation: isolate;
+}
+
+.contact-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-heading {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+
+
+/* ============================================
+   GRID
+   ============================================ */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+  gap: 3rem;
+  align-items: stretch;
+}
+
+.contact-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+
+/* ============================================
+   DIVIDER / SIGNAL WIRE
+   ============================================ */
+
+.contact-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-divider--v {
+  grid-column: 2;
+  grid-row: 1;
+  height: 100%;
+  min-height: 480px;
+}
+
+.contact-divider--h {
+  display: none;
+}
+
+
+/* ============================================
+   EYEBROW
+   ============================================ */
+
+.contact-eyebrow {
+  margin: 0;
+
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+
+  color: rgba(0, 245, 255, 0.85);
+}
+
+
+/* ============================================
+   FORM
+   ============================================ */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  cursor:none !important;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  cursor: none;
+}
+
+
+/* ---- Labels ---- */
+
+.form-field label {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.6);
+}
+
+
+/* ---- Inputs + Textarea ---- */
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 0.9rem 1rem;
+
+  border-radius: 0.75rem;
+  border: 1px solid rgba(140, 220, 255, 0.25);
+
+  background: rgba(255, 255, 255, 0.055);
+
+  color: rgba(255, 255, 255, 0.95);
+
+  font-family: inherit;
+  font-size: 0.9rem;
+
+  outline: none;
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* ---- Fixed textarea ---- */
+
+.form-field textarea {
+  height: 120px;
+  min-height: 120px;
+  max-height: 120px;
+
+  resize: none;
+}
+
+
+/* ---- Placeholder ---- */
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: rgba(200, 240, 255, 0.45);
+}
+
+
+/* ---- Input hover ---- */
+
+.form-field input:hover,
+.form-field textarea:hover {
+  border-color: rgba(0, 245, 255, 0.4);
+
+  background: rgba(0, 245, 255, 0.045);
+}
+
+
+/* ---- Input focus ---- */
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: rgba(0, 245, 255, 0.75);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(107, 92, 255, 0.09),
+      rgba(0, 245, 255, 0.055)
+    );
+
+  box-shadow:
+    0 0 0 1px rgba(0, 245, 255, 0.12),
+    0 0 20px rgba(0, 245, 255, 0.12),
+    inset 0 0 20px rgba(0, 245, 255, 0.025);
+}
+
+
+/* ============================================
+   SUBMIT BUTTON
+   ============================================ */
+
+.form-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+
+  padding: 1rem 1.5rem;
+  margin-top: 0.5rem;
+
+  border-radius: 0.75rem;
+  border: 1px solid rgba(107, 92, 255, 0.5);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(107, 92, 255, 0.22),
+      rgba(0, 245, 255, 0.12)
+    );
+
+  color: #ffffff;
+
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  cursor: none;
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.form-submit:hover:not(:disabled) {
+  border-color: rgba(140, 130, 255, 0.9);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(107, 92, 255, 0.35),
+      rgba(0, 245, 255, 0.18)
+    );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 24px rgba(107, 92, 255, 0.3),
+    0 0 20px rgba(0, 245, 255, 0.08);
+}
+
+.form-submit:disabled {
+  cursor: none;
+}
+
+.form-submit.sent {
+  border-color: rgba(37, 211, 102, 0.6);
+
+  background: rgba(37, 211, 102, 0.15);
+
+  color: #6ee7a0;
+}
+
+.form-submit svg:last-child {
+  transition: transform 0.3s ease;
+}
+
+.form-submit:hover:not(:disabled) svg:last-child {
+  transform: translateX(3px);
+}
+
+
+/* ============================================
+   CONTACT LINKS
+   ============================================ */
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.contact-link {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+
+  box-sizing: border-box;
+
+  border-radius: 0.9rem;
+  border: 1px solid rgba(180, 235, 255, 0.16);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  /*
+   * Deliberately no transform transition.
+   * The card never moves or scales.
+   */
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* ============================================
+   LAVENDER LEFT BORDER
+   ============================================ */
+
+.contact-link::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  background: rgb(187, 170, 245);
+
+  transform: scaleY(0);
+  transform-origin: center;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  box-shadow:
+    0 0 0 rgba(187, 170, 245, 0);
+}
+
+.contact-link:hover::before {
+  transform: scaleY(1);
+
+  box-shadow:
+    0 0 12px rgba(187, 170, 245, 0.65);
+}
+
+
+/* ============================================
+   LINK HOVER
+   ============================================ */
+
+.contact-link:hover {
+  /*
+   * Lavender border instead of white.
+   */
+  border-color: rgba(187, 170, 245, 0.4);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(187, 170, 245, 0.08),
+      rgba(255, 255, 255, 0.035)
+    );
+
+  /*
+   * No movement.
+   * No scale.
+   */
+  transform: none;
+
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.15),
+    0 0 16px rgba(187, 170, 245, 0.06);
+}
+
+
+/* ============================================
+   LINK ICON
+   ============================================ */
+
+.link-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 0.6rem;
+
+  border: 1px solid rgba(180, 240, 255, 0.2);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(0, 245, 255, 0.035)
+    );
+
+  color: rgba(220, 250, 255, 0.9);
+
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+
+/* No scaling on icon */
+
+.contact-link:hover .link-icon {
+  border-color: rgba(187, 170, 245, 0.55);
+
+  color: rgb(215, 205, 255);
+
+  box-shadow:
+    inset 0 0 12px rgba(187, 170, 245, 0.12),
+    0 0 16px rgba(187, 170, 245, 0.12);
+
+  transform: none;
+}
+
+
+/* ============================================
+   LINK TEXT
+   ============================================ */
+
+.link-text {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.15rem;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.link-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.98);
+}
+
+.link-sub {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.7rem;
+
+  color: rgba(190, 225, 235, 0.58);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover .link-sub {
+  color: rgba(210, 202, 255, 0.8);
+}
+
+
+/* ============================================
+   LINK ARROW
+   ============================================ */
+
+.link-arrow {
+  flex-shrink: 0;
+
+  color: rgba(190, 230, 240, 0.45);
+
+  transition: color 0.3s ease;
+}
+
+
+/*
+ * Arrow stays in exactly the same position.
+ * No translateX.
+ */
+
+.contact-link:hover .link-arrow {
+  color: rgb(187, 170, 245);
+
+  transform: none;
+}
+
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 900px) {
+  .contact-section {
+    padding: 5rem 1.25rem 4rem;
+  }
+
+  .contact-heading {
+    margin-bottom: 3rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* Hide vertical wire */
+  .contact-divider--v {
+    display: none;
+  }
+
+  /* Show horizontal wire */
+  .contact-divider--h {
+    display: flex;
+
+    grid-column: 1;
+
+    width: 100%;
+    height: 40px;
+  }
+
+  .contact-form-col,
+  .contact-links-col {
+    align-items: center;
+  }
+
+  .contact-eyebrow {
+    text-align: center;
+  }
+
+  .contact-form,
+  .contact-links {
+    width: 100%;
+    max-width: 480px;
+  }
+}
+
+
+
+/* ============================================
+   SMALL MOBILE
+   ============================================ */
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .contact-link {
+    padding: 0.8rem 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .link-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .link-label {
+    font-size: 0.82rem;
+  }
+
+  .link-sub {
+    font-size: 0.62rem;
+  }
+
+  .link-arrow {
+    width: 13px;
+    height: 13px;
+  }
+}

@@ -1,0 +1,140 @@
+.site-footer {
+  position: relative;
+  width: 100%;
+  padding: 6rem 1.5rem 0;
+  overflow: hidden;
+  background: transparent;
+  isolation: isolate;
+}
+
+/* ============================================
+   GRADIENT SCRIM
+   ============================================ */
+
+.footer-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(3, 4, 7, 0) 0%,
+    rgba(3, 4, 7, 0.35) 25%,
+    rgba(3, 4, 7, 0.75) 55%,
+    rgba(3, 4, 7, 0.95) 80%,
+    rgba(3, 4, 7, 1) 100%
+  );
+}
+
+/* ============================================
+   WORDMARK
+   ============================================ */
+
+.footer-wordmark-wrap {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  width: 100%;
+
+  padding: 2rem 0 0;
+  margin: 0;
+
+  line-height: 0;
+}
+
+/* ============================================
+   BOTTOM BAR
+   ============================================ */
+
+.footer-bar {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-name {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.85rem;
+  color: rgb(187, 170, 245);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.footer-copy {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.05em;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.55);
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.footer-social-link:hover {
+  border-color: rgba(187, 170, 245, 0.4);
+  background: rgba(187, 170, 245, 0.08);
+  color: rgb(187, 170, 245);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 640px) {
+  .site-footer {
+    padding: 4rem 1.25rem 0;
+  }
+
+  .footer-wordmark-wrap {
+    padding: 1rem 0 0;
+  }
+
+  .footer-bar {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-copy {
+    order: 3;
+  }
+}

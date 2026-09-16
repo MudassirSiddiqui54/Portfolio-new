@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   GLOBAL CURSOR OVERRIDE
+   Forces cursor:none everywhere, including
+   native form element states that the browser
+   would otherwise hijack.
+   ============================================ */
+
+html,
+body,
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+/* Explicit overrides for form elements — the UA stylesheet
+   forces I-beam on these and wins against a plain `cursor: none` */
+input,
+textarea,
+select,
+button,
+a,
+[contenteditable="true"],
+input:hover,
+textarea:hover,
+select:hover,
+button:hover,
+a:hover,
+input:focus,
+textarea:focus,
+select:focus,
+button:focus,
+a:focus,
+input:active,
+textarea:active,
+select:active,
+button:active,
+a:active {
+  cursor: none !important;
+}
+
+/* --- Zentry Font --- */
+@font-face {
+  font-family: "Zentry";
+  src: url("/font/zentry-regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.special-font {
+  font-family: "Zentry", sans-serif;
+  font-feature-settings: "ss01" on;
+}
+.zentry {
+  font-family: "Zentry", sans-serif;
+}
+
+/* --- Per-Letter Wobble Animation --- */
+/* --- Per-Letter Wobble Animation --- */
+@keyframes wobble {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+
+  20% {
+    transform: translateY(-8px) rotate(-6deg) scale(1.05);
+  }
+
+  40% {
+    transform: translateY(0) rotate(6deg) scale(1.05);
+  }
+
+  60% {
+    transform: translateY(8px) rotate(-4deg) scale(1.05);
+  }
+
+  80% {
+    transform: translateY(-4px) rotate(4deg) scale(1.02);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+/* --- Hero Fade In Animations --- */
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  cursor: none !important;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;  
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Kill the double-scroll quirk that some browsers show when
+   overflow-x: hidden is set on html */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  background: #f2efbb;
+  overflow-x: clip;
+}
+
+* {
+  box-sizing: border-box;
+}
+a, button, [role="button"] {
+  cursor: none !important;
+}
+
+.fade-in-left {
+  animation: fadeInLeft 2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.fade-in-right {
+  animation: fadeInRight 2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+
+.letter {
+  display: inline-block;
+}
+
+.letter.wobble {
+  animation: wobble 0.6s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+.scroll-arrow-text-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.02em; /* Tighter than before — this is now a heading, not a hero word */
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+.scroll-arrow-char {
+  display: inline-block;
+  /* Much smaller than the original 12vw since it's a section heading now */
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1;
+  font-family: 'Inter', system-ui, sans-serif; /* NOT Zentry — see note below */
+  letter-spacing: -0.03em;
+  color: #111827;
+  will-change: transform, opacity;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Preserve the space character width in "ABOUT ME" */
+.scroll-arrow-char[aria-hidden="true"] {
+  min-width: 0.3em;
+}
+
+.liquid-card {
+  position: relative;
+  isolation: isolate;
+
+  /* Let the React content determine height */
+  width: 100%;
+
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.liquid-card__canvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  pointer-events: none;
+}
+
+.liquid-card__content {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+}

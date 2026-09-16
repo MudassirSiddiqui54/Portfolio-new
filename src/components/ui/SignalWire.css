@@ -1,0 +1,113 @@
+.signal-wire {
+  position: relative;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ---- VERTICAL ---- */
+.signal-wire--v {
+  width: 40px;
+  height: 100%;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+}
+
+.signal-wire--v .wire-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  left: 50%;
+  transform: translateX(calc(-50% + var(--wire-offset)));
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--wire-color) 50%,
+    transparent 100%
+  );
+  opacity: var(--wire-opacity);
+}
+
+.signal-wire--v .wire-pulse {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 80px;
+  left: 50%;
+  transform: translateX(calc(-50% + var(--wire-offset)));
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--wire-color) 50%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px var(--wire-color),
+    0 0 14px var(--wire-color);
+}
+
+/* ---- HORIZONTAL ---- */
+.signal-wire--h {
+  width: 100%;
+  height: 40px;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+}
+
+.signal-wire--h .wire-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  top: 50%;
+  transform: translateY(calc(-50% + var(--wire-offset)));
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--wire-color) 50%,
+    transparent 100%
+  );
+  opacity: var(--wire-opacity);
+}
+
+.signal-wire--h .wire-pulse {
+  position: absolute;
+  left: 0;
+  height: 1px;
+  width: 80px;
+  top: 50%;
+  transform: translateY(calc(-50% + var(--wire-offset)));
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--wire-color) 50%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px var(--wire-color),
+    0 0 14px var(--wire-color);
+}

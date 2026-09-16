@@ -1,0 +1,177 @@
+.footer-wordmark-container {
+  position: relative;
+
+  width: var(--wordmark-width);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: var(--wordmark-margin);
+  padding: var(--wordmark-padding);
+
+  background: transparent;
+
+  overflow: hidden;
+  cursor: none;
+}
+
+
+/* ============================================
+   WORDMARK
+   ============================================ */
+
+.footer-wordmark-text {
+  position: relative;
+
+  margin: 0;
+
+  font-family: var(--wordmark-font);
+  font-weight: var(--wordmark-weight);
+  font-size: var(--wordmark-size);
+
+  letter-spacing: var(--wordmark-spacing);
+  line-height: var(--wordmark-line-height);
+
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+
+  /*
+   * Hollow gray outline by default.
+   */
+  color: transparent;
+
+  -webkit-text-stroke:
+    var(--wordmark-stroke-width)
+    var(--wordmark-stroke);
+
+  text-rendering: geometricPrecision;
+
+  /*
+   * This stretches the word horizontally
+   * without making it taller.
+   */
+  transform: scaleX(var(--wordmark-scale-x));
+  transform-origin: center center;
+
+  isolation: isolate;
+}
+
+
+/* ============================================
+   HOVER FILL
+   ============================================ */
+
+.footer-wordmark-text::after {
+  content: attr(data-text);
+
+  position: absolute;
+  inset: 0;
+
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+
+  /*
+   * IMPORTANT:
+   * The fill is lavender, NOT the normal
+   * wordmark color.
+   */
+  color: var(--wordmark-glow);
+
+  /*
+   * Keep the gray outline underneath.
+   * The pseudo-element itself has no stroke.
+   */
+  -webkit-text-stroke: 0;
+
+  pointer-events: none;
+
+  /*
+   * Localized mouse reveal.
+   */
+  mask-image:
+    radial-gradient(
+      circle var(--wordmark-glow-size)
+      at var(--mouse-x) var(--mouse-y),
+      black 0%,
+      black 40%,
+      rgba(0, 0, 0, 0.75) 58%,
+      transparent 100%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      circle var(--wordmark-glow-size)
+      at var(--mouse-x) var(--mouse-y),
+      black 0%,
+      black 40%,
+      rgba(0, 0, 0, 0.75) 58%,
+      transparent 100%
+    );
+
+  opacity: 0;
+
+  transition: opacity 0.35s ease;
+
+  /*
+   * Subtle lavender glow.
+   */
+  filter:
+    drop-shadow(
+      0 0 8px
+      color-mix(
+        in srgb,
+        var(--wordmark-glow)
+        calc(var(--wordmark-glow-opacity) * 5%),
+        transparent
+      )
+    )
+    drop-shadow(
+      0 0 20px
+      color-mix(
+        in srgb,
+        var(--wordmark-glow)
+        calc(var(--wordmark-glow-opacity) * 2%),
+        transparent
+      )
+    );
+}
+
+
+/* ============================================
+   HOVER
+   ============================================ */
+
+.footer-wordmark-container:hover
+.footer-wordmark-text::after {
+  opacity: 1;
+}
+
+
+/*
+ * DO NOT change the outline on hover.
+ *
+ * The original outline remains:
+ *
+ *     gray
+ *     gray
+ *     gray
+ *
+ * while the inside gets the lavender fill.
+ */
+
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 600px) {
+  .footer-wordmark-text {
+    letter-spacing: -0.05em;
+  }
+}

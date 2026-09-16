@@ -1,0 +1,37 @@
+.inside-section {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  contain: strict;
+  background: #030407;
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.inside-section > div:first-child {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Bottom fade — characters dissolve into the base color */
+.inside-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 220px;
+  background: linear-gradient(
+    to top,
+    #030407 0%,
+    rgba(3, 4, 7, 0.95) 25%,
+    rgba(3, 4, 7, 0.6) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}

@@ -1,0 +1,31 @@
+.projects-section {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+}
+
+.projects-section .scroll-arrow-text-wrapper {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.project-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* REMOVED from .projects-track:
+   will-change: transform;
+   transform: translate3d(0,0,0);
+
+   Reason: this element is w-max (2500px+ wide). Forcing a persistent
+   compositor layer that wide exhausts GPU memory, and it conflicts with
+   the transform GSAP sets via force3D during the pin. Let GSAP handle
+   promotion — it does it correctly. */
+
+/* Keep the card promotion — cards are small, individually composited */
+.project-card {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}

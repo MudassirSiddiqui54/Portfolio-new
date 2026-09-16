@@ -1,0 +1,35 @@
+.tornado-canvas-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent;
+  overflow: hidden;
+  contain: strict; 
+}
+
+.tornado-canvas-container.ready {
+  opacity: 1;
+}
+
+.tornado-canvas-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.tornado-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ff4444;
+  font-family: monospace;
+  font-size: 12px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+}

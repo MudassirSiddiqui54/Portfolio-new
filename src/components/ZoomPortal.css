@@ -1,0 +1,65 @@
+.zoom-section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: clip;
+  background: #030407;
+  color: white;
+  contain: layout paint;
+
+  margin-top: -1px;
+  padding-top: 1px;
+
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+.canvas-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Purple ambient glow (from before) */
+.zoom-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 60%,
+    rgba(90, 40, 200, 0.15) 0%,
+    rgba(40, 15, 100, 0.08) 30%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Top shade — replaces the mask, no visible edge */
+.zoom-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(
+    to bottom,
+    #030407 0%,
+    rgba(3, 4, 7, 0.85) 30%,
+    rgba(3, 4, 7, 0.4) 65%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
