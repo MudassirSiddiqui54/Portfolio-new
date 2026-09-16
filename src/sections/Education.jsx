@@ -9,20 +9,20 @@ gsap.registerPlugin(ScrollTrigger);
 
 const educationData = [
 	{
-		date: "2022–2023",
+		date: "2021–2022",
 		title: "Secondary Education (SSC)",
 		school: "Nutan English School",
 		description: "Built a strong foundation in science and mathematics.",
 	},
 	{
-		date: "2023–2025",
+		date: "2023–2024",
 		title: "Higher Secondary Education (HSC)",
 		school: "Central Public Jr. College",
 		description:
 			"Developed an early interest in programming and technology.",
 	},
 	{
-		date: "2025–2028",
+		date: "2024–2028",
 		current: true,
 		title: "B.Tech in AI & Data Science",
 		school: "KJ Somaiya Institute of Technology",
@@ -129,7 +129,7 @@ export default function Education() {
 				</svg>
 
 				{educationData.map((item, index) => (
-					<EducationItem key={index} data={item} index={index} />
+					<EducationItem Skey={index} data={item} index={index} />
 				))}
 			</div>
 		</section>

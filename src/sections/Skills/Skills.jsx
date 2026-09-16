@@ -32,8 +32,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const SKILLS = [
 	{ label: "Frontend", items: ["React", "HTML5", "CSS3", "Tailwind"] },
-	{ label: "Backend", items: ["Node.js", "Express", "Django"] },
-	{ label: "AI / ML", items: ["NumPy", "Pandas"] },
+	{ label: "Backend", items: ["Node.js", "Express", "FastAPI"] },
+	{
+		label: "AI / ML",
+		items: ["NumPy", "Pandas", "Scikit-Learn", "Matplotlib"],
+	},
 	{ label: "Languages", items: ["JavaScript", "Python", "Java", "C"] },
 	{ label: "Database", items: ["MySQL", "MongoDB", "SQLite"] },
 	{ label: "Tools", items: ["Git", "GitHub", "VS Code"] },
