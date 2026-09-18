@@ -1,3 +1,4 @@
+import { io } from "socket.io-client";
 import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -48,12 +49,14 @@ const LINKS = [
 		href: "https://wa.me/919867210504?text=Hii",
 	},
 ];
+const SOCKET_URL = import.meta.env.VITE_SOCIAL_SOCKET_URL;
 
 export default function Contact() {
 	const sectionRef = useRef(null);
 	const formColRef = useRef(null);
 	const linksColRef = useRef(null);
 	const [sent, setSent] = useState(false);
+	const [status, setStatus] = useState("idle");
 
 	useEffect(() => {
 		const ctx = gsap.context(() => {
@@ -104,11 +107,49 @@ export default function Contact() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setSent(true);
-		setTimeout(() => {
-			setSent(false);
-			e.target.reset();
-		}, 2400);
+
+		const form = e.currentTarget;
+		const formData = new FormData(form);
+
+		setStatus("sending");
+
+		const socket = io(SOCKET_URL, {
+			transports: ["websocket", "polling"],
+		});
+
+		socket.on("connect", () => {
+			socket.emit(
+				"portfolio:message",
+				{
+					name: formData.get("name"),
+					email: formData.get("email"),
+					message: formData.get("message"),
+				},
+				(result) => {
+					socket.disconnect();
+
+					if (!result?.ok) {
+						console.error(result?.message);
+						setStatus("error");
+						return;
+					}
+
+					form.reset();
+					setStatus("sent");
+
+					setTimeout(() => {
+						setStatus("idle");
+					}, 2400);
+				},
+			);
+		});
+
+		socket.on("connect_error", (error) => {
+			console.error("Socket connection failed:", error);
+
+			socket.disconnect();
+			setStatus("error");
+		});
 	};
 
 	return (
@@ -172,13 +213,24 @@ export default function Contact() {
 
 							<button
 								type="submit"
-								className={`form-submit ${sent ? "sent" : ""}`}
-								disabled={sent}
+								className={`form-submit ${status === "sent" ? "sent" : ""}`}
+								disabled={
+									status === "sending" || status === "sent"
+								}
 							>
-								{sent ? (
+								{status === "sending" ? (
+									<>
+										<span>Sending...</span>
+									</>
+								) : status === "sent" ? (
 									<>
 										<FiCheck size={14} />
 										<span>Message Sent</span>
+									</>
+								) : status === "error" ? (
+									<>
+										<span>Try Again</span>
+										<FiArrowRight size={14} />
 									</>
 								) : (
 									<>
