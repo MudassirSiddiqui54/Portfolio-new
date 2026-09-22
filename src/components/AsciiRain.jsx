@@ -57,20 +57,56 @@ export default function AsciiRain({
 			}
 		};
 
-		const interval = setInterval(draw, speed);
+		let animationFrame = null;
+		let lastDrawTime = 0;
+
+		const drawLoop = (time) => {
+			if (!isVisibleRef.current) {
+				animationFrame = null;
+				return;
+			}
+
+			if (time - lastDrawTime >= speed) {
+				lastDrawTime = time;
+				draw();
+			}
+
+			animationFrame = requestAnimationFrame(drawLoop);
+		};
+
+		const startLoop = () => {
+			if (animationFrame !== null) return;
+
+			lastDrawTime = performance.now();
+			animationFrame = requestAnimationFrame(drawLoop);
+		};
+
+		const stopLoop = () => {
+			if (animationFrame !== null) {
+				cancelAnimationFrame(animationFrame);
+				animationFrame = null;
+			}
+		};
 
 		const observer = new IntersectionObserver(
 			([entry]) => {
 				isVisibleRef.current = entry.isIntersecting;
+
+				if (entry.isIntersecting) {
+					startLoop();
+				} else {
+					stopLoop();
+				}
 			},
 			{ threshold: 0 },
 		);
+
 		observer.observe(canvas);
 
 		return () => {
-			clearInterval(interval);
-			window.removeEventListener("resize", resizeCanvas);
+			stopLoop();
 			observer.disconnect();
+			window.removeEventListener("resize", resizeCanvas);
 		};
 	}, [textColor, bgColor, fontSize, speed, characters]);
 

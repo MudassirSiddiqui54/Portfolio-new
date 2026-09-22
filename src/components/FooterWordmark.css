@@ -114,9 +114,7 @@
       transparent 100%
     );
 
-  opacity: 0;
-
-  transition: opacity 0.35s ease;
+  opacity: 1;
 
   /*
    * Subtle lavender glow.
@@ -143,35 +141,20 @@
 }
 
 
-/* ============================================
-   HOVER
-   ============================================ */
 
-.footer-wordmark-container:hover
-.footer-wordmark-text::after {
-  opacity: 1;
-}
-
-
-/*
- * DO NOT change the outline on hover.
- *
- * The original outline remains:
- *
- *     gray
- *     gray
- *     gray
- *
- * while the inside gets the lavender fill.
- */
 
 
 /* ============================================
    MOBILE
    ============================================ */
-
 @media (max-width: 600px) {
-  .footer-wordmark-text {
-    letter-spacing: -0.05em;
-  }
+	.footer-wordmark-container {
+		--wordmark-scale-x: 1 !important;
+    --wordmark-glow-size: 7rem !important;
+	}
+
+	.footer-wordmark-text {
+		font-size: 22vw;
+		letter-spacing: -0.04em;
+	}
 }

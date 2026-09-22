@@ -5,10 +5,16 @@ import About from "../sections/About/About";
 import Education from "../sections/Education/Education";
 
 const LightModeWrapper = () => {
+	const wrapperRef = useRef(null);
 	return (
-		<div className="relative bg-[#f2efbb]">
+		<div ref={wrapperRef} className="relative bg-[#f2efbb]">
 			{/* No triggerRef → always visible (original behavior) */}
-			<HeroBackgroundM opacity={0.6} color="red" trackColor="#BFC5CC" />
+			<HeroBackgroundM
+				opacity={0.6}
+				color="red"
+				trackColor="#BFC5CC"
+				triggerRef={wrapperRef}
+			/>
 			<div className="relative z-10">
 				<Hero />
 				<About />

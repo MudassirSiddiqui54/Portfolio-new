@@ -203,9 +203,6 @@
 
 	align-items: center;
 	justify-content: center;
-
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
 }
 
 
@@ -246,8 +243,7 @@
 
 	border: 1px solid rgba(255, 255, 255, 0.22);
 
-	backdrop-filter: blur(18px) saturate(140%);
-	-webkit-backdrop-filter: blur(18px) saturate(140%);
+	backdrop-filter: blur(18px);
 
 	box-shadow:
 		0 20px 60px rgba(0, 0, 0, 0.18),

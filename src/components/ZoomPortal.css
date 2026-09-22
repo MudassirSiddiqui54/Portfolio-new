@@ -13,7 +13,7 @@
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  will-change: transform;
+  /* will-change: transform; */
 }
 
 .canvas-wrapper {
@@ -27,7 +27,7 @@
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  will-change: transform;
+  /* will-change: transform; */
 }
 
 /* Purple ambient glow (from before) */

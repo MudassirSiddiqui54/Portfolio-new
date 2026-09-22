@@ -9,12 +9,27 @@ const SpotlightCard = ({
 	const [isFocused, setIsFocused] = useState(false);
 	const [position, setPosition] = useState({ x: 0, y: 0 });
 	const [opacity, setOpacity] = useState(0);
+	const isVisibleRef = useRef(false);
+	const rafRef = useRef(0);
+	const mouseRef = useRef({ x: 0, y: 0 });
+
+	const update = () => {
+		rafRef.current = 0;
+
+		if (!isVisibleRef.current) return;
+
+		const { x, y } = mouseRef.current;
+
+		// expensive calculations here
+	};
 
 	const handleMouseMove = (e) => {
-		if (!divRef.current || isFocused) return;
+		mouseRef.current.x = e.clientX;
+		mouseRef.current.y = e.clientY;
 
-		const rect = divRef.current.getBoundingClientRect();
-		setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+		if (!rafRef.current) {
+			rafRef.current = requestAnimationFrame(update);
+		}
 	};
 
 	const handleFocus = () => {

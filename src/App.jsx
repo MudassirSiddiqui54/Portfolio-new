@@ -37,32 +37,35 @@ function DarkZoneSentinel() {
 
 function App() {
 	return (
-		<CursorProvider>
-			<ReactLenis
-				root
-				options={{
-					duration: 1.6,
-					easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-					orientation: "vertical",
-					gestureOrientation: "vertical",
-					smoothWheel: true,
-					wheelMultiplier: 0.5,
-					touchMultiplier: 1.2,
-					syncTouch: true,
-					syncTouchLerp: 0.05,
-					autoResize: true,
-					infinite: false,
-				}}
-			>
-				<SmoothScrollSync />
-				<CursorManager />
-				<FloatingNavbar />
-				<LightModeWrapper />
-				<ZoomPortal />
-				<DarkModeWrapper />
-				<DarkZoneSentinel />
-			</ReactLenis>
-		</CursorProvider>
+		<div id="portfolio-app">
+			<CursorProvider>
+				<ReactLenis
+					root
+					options={{
+						duration: 1.6,
+						easing: (t) =>
+							Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+						orientation: "vertical",
+						gestureOrientation: "vertical",
+						smoothWheel: true,
+						wheelMultiplier: 0.5,
+						touchMultiplier: 1.2,
+						syncTouch: true,
+						syncTouchLerp: 0.05,
+						autoResize: true,
+						infinite: false,
+					}}
+				>
+					<SmoothScrollSync />
+					<CursorManager />
+					<FloatingNavbar />
+					<LightModeWrapper />
+					<ZoomPortal />
+					<DarkModeWrapper />
+					<DarkZoneSentinel />
+				</ReactLenis>
+			</CursorProvider>
+		</div>
 	);
 }
 

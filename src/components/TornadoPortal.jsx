@@ -27,6 +27,8 @@ export default function TornadoPortal({ zoomRef }) {
 	const containerRef = useRef(null);
 	const [isReady, setIsReady] = useState(false);
 	const [error, setError] = useState(null);
+	const isNearViewportRef = useRef(false);
+	const isWarmedRef = useRef(false);
 
 	useEffect(() => {
 		let isMounted = true;
@@ -43,6 +45,18 @@ export default function TornadoPortal({ zoomRef }) {
 
 				const container = containerRef.current;
 				if (!container) return;
+
+				const observer = new IntersectionObserver(
+					([entry]) => {
+						isNearViewportRef.current = entry.isIntersecting;
+					},
+					{
+						rootMargin: "1200px 0px",
+						threshold: 0,
+					},
+				);
+
+				observer.observe(container);
 
 				// 2. Setup Camera
 				camera = new THREE.PerspectiveCamera(
@@ -237,9 +251,9 @@ export default function TornadoPortal({ zoomRef }) {
 				scene.add(dark);
 
 				// --- RENDERER ---
-				renderer = new THREE.WebGPURenderer({ antialias: true });
+				renderer = new THREE.WebGPURenderer({ antialias: false });
 				renderer.setClearColor(0x000000, 0);
-				renderer.setPixelRatio(window.devicePixelRatio);
+				renderer.setPixelRatio(1);
 				renderer.setSize(container.clientWidth, container.clientHeight);
 				renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
@@ -262,22 +276,31 @@ export default function TornadoPortal({ zoomRef }) {
 				renderPipeline = new THREE.RenderPipeline(renderer);
 				const scenePass = pass(scene, camera);
 				const scenePassColor = scenePass.getTextureNode("output");
-				const bloomPass = bloom(scenePassColor, 0.1, 0.2, 0.7);
+				const bloomPass = bloom(scenePassColor, 0.05, 0.15, 0.7);
 				renderPipeline.outputNode = scenePassColor.add(bloomPass);
 
 				// --- ANIMATION LOOP ---
 				const animate = async () => {
 					if (!isMounted) return;
 
+					// Always allow the one-time warm-up render.
+					if (!isNearViewportRef.current && !isWarmedRef.current) {
+						return;
+					}
+
 					if (zoomRef && zoomRef.current !== undefined) {
 						const progress = zoomRef.current;
+
 						camera.position.y = THREE.MathUtils.lerp(
 							2.5,
 							0.1,
 							progress,
 						);
+
 						camera.fov = THREE.MathUtils.lerp(35, 75, progress);
+
 						camera.updateProjectionMatrix();
+
 						camera.lookAt(
 							0,
 							THREE.MathUtils.lerp(0.5, 0, progress),
@@ -288,10 +311,21 @@ export default function TornadoPortal({ zoomRef }) {
 					await renderPipeline.render();
 				};
 
+				// Perform one real render BEFORE telling the loader we're ready.
+				// This forces WebGPU to compile/initialize the relevant pipeline
+				// while the loader is still covering the page.
+				await animate();
+
+				if (!isMounted) return;
+
+				isWarmedRef.current = true;
+
 				renderer.setAnimationLoop(animate);
 
-				// Trigger the fade-in ONLY after everything is fully initialized and rendering
+				// The expensive first render has already happened.
 				setIsReady(true);
+
+				window.dispatchEvent(new CustomEvent("portfolio:heavy-ready"));
 			} catch (err) {
 				console.error("TornadoPortal Init Error:", err);
 				if (isMounted) setError(err.message);
@@ -303,9 +337,11 @@ export default function TornadoPortal({ zoomRef }) {
 		// --- CLEANUP (Handles React Strict Mode double-mounting) ---
 		return () => {
 			isMounted = false;
+			observer.disconnect();
 			if (renderer) {
 				renderer.setAnimationLoop(null);
 				renderer.dispose();
+
 				if (renderer.domElement && renderer.domElement.parentNode) {
 					renderer.domElement.parentNode.removeChild(
 						renderer.domElement,

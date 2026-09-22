@@ -11,6 +11,7 @@ export default function HeroBackgroundM({
 }) {
 	const containerRef = useRef(null);
 	const glowPathsRef = useRef([]);
+	const tweensRef = useRef([]);
 	const filterId = useRef(
 		`blueGlow-${Math.random().toString(36).slice(2, 9)}`,
 	).current;
@@ -38,7 +39,7 @@ export default function HeroBackgroundM({
 		const ctx = gsap.context(() => {
 			const elements = glowPathsRef.current.filter(Boolean);
 
-			elements.forEach((el, index) => {
+			tweensRef.current = elements.map((el, index) => {
 				const length = el.getTotalLength();
 
 				gsap.set(el, {
@@ -46,7 +47,7 @@ export default function HeroBackgroundM({
 					strokeDashoffset: length,
 				});
 
-				gsap.to(el, {
+				return gsap.to(el, {
 					strokeDashoffset: 0,
 					duration: 2,
 					delay: index * 0.1,
@@ -54,32 +55,54 @@ export default function HeroBackgroundM({
 					repeat: -1,
 					repeatDelay: 1.5,
 					yoyo: true,
+					paused: Boolean(triggerRef),
 				});
 			});
 		}, containerRef);
 
-		return () => ctx.revert();
-	}, []);
+		return () => {
+			tweensRef.current.forEach((tween) => tween.kill());
+			tweensRef.current = [];
+			ctx.revert();
+		};
+	}, [triggerRef]);
 
 	// Visibility tied to triggerRef (only when provided)
 	useEffect(() => {
 		if (!triggerRef?.current || !containerRef.current) return;
 
-		// Start hidden
-		gsap.set(containerRef.current, { opacity: 0 });
+		const container = containerRef.current;
+
+		gsap.set(container, {
+			opacity: 0,
+		});
 
 		const observer = new IntersectionObserver(
 			([entry]) => {
-				gsap.to(containerRef.current, {
-					opacity: entry.isIntersecting ? opacity : 0,
-					duration: 0.8,
+				const visible = entry.isIntersecting;
+
+				gsap.to(container, {
+					opacity: visible ? opacity : 0,
+					duration: 0.5,
 					ease: "power2.out",
 				});
+
+				// THIS is the important part.
+				tweensRef.current.forEach((tween) => {
+					if (visible) {
+						tween.resume();
+					} else {
+						tween.pause();
+					}
+				});
 			},
-			{ threshold: 0, rootMargin: "0px 0px -10% 0px" },
+			{
+				threshold: 0,
+			},
 		);
 
 		observer.observe(triggerRef.current);
+
 		return () => observer.disconnect();
 	}, [triggerRef, opacity]);
 
@@ -95,8 +118,24 @@ export default function HeroBackgroundM({
 				preserveAspectRatio="xMidYMid meet"
 			>
 				<g transform="translate(500 375) scale(1.5) translate(-410 -375)">
+					{/* ONE blurred group instead of 14 independently filtered paths */}
+					<g filter={`url(#${filterId})`} opacity="0.18">
+						{paths.map((d, index) => (
+							<path
+								key={`glow-${index}`}
+								d={d}
+								fill="none"
+								stroke={color}
+								strokeWidth={glowStrokeWidth}
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
+						))}
+					</g>
+
+					{/* Thin animated lines */}
 					{paths.map((d, index) => (
-						<g key={index}>
+						<g key={`line-${index}`}>
 							<path
 								d={d}
 								fill="none"
@@ -105,17 +144,6 @@ export default function HeroBackgroundM({
 								strokeLinecap="round"
 								strokeLinejoin="round"
 								opacity="0.45"
-							/>
-
-							<path
-								d={d}
-								fill="none"
-								stroke={color}
-								strokeWidth={glowStrokeWidth}
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								opacity="0.18"
-								filter={`url(#${filterId})`}
 							/>
 
 							<path
@@ -137,12 +165,12 @@ export default function HeroBackgroundM({
 				<defs>
 					<filter
 						id={filterId}
-						x="-100%"
-						y="-100%"
-						width="300%"
-						height="300%"
+						x="-50%"
+						y="-50%"
+						width="200%"
+						height="200%"
 					>
-						<feGaussianBlur stdDeviation="7" />
+						<feGaussianBlur stdDeviation="5" />
 					</filter>
 				</defs>
 			</svg>

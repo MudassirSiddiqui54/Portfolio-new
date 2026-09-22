@@ -2,17 +2,147 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>portfolio</title>
-<script>
-  document.body.setAttribute("data-theme", "light");
-  document.documentElement.setAttribute("data-theme", "light");
-  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-</script>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Mudassir Siddiqui — Developer</title>
+
+    <!-- Load Zentry BEFORE the loader is displayed -->
+    <link
+      rel="preload"
+      href="/font/zentry-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <style>
+      @font-face {
+        font-family: "ZentryLoader";
+        src: url("/font/zentry-regular.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+        font-display: block;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        min-height: 100%;
+        background: #f2efbb;
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      /*
+       * The loader exists BEFORE React.
+       * Therefore there can be no React mounting flash.
+       */
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #f2efbb;
+
+        opacity: 1;
+        visibility: visible;
+
+        transition:
+          opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+          visibility 0.8s;
+
+        pointer-events: all;
+      }
+
+      #initial-loader.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+.loader-name {
+  position: relative;
+
+  font-family: "ZentryLoader", sans-serif;
+  font-size: clamp(4rem, 14vw, 12rem);
+  letter-spacing: 0.12em;
+  line-height: 0.9;
+  white-space: nowrap;
+
+  /* Transparent letters + visible outline */
+  color: transparent;
+  -webkit-text-stroke: 1.5px #000000;
+
+  /*
+   * The fill is on the SAME text.
+   * This prevents the misaligned duplicate-text effect.
+   */
+  background-image: linear-gradient(
+    to top,
+    #000000 0%,
+    #000000 100%
+  );
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 0%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  font-synthesis: none;
+
+  transition:
+    background-size 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 600px) {
+  .loader-name {
+    font-size: 17vw;
+    letter-spacing: 0.14em;
+    -webkit-text-stroke-width: 1px;
+  }
+      }
+    </style>
+
+    <script>
+      document.documentElement.setAttribute("data-theme", "light");
+
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+    </script>
   </head>
+
   <body>
+    <!--
+      This is intentionally NOT React.
+      It exists before React starts.
+    -->
+    <div id="initial-loader" aria-hidden="true">
+      <div
+        class="loader-name"
+        data-text="MUDASSIR"
+        style="--loader-progress: 0%"
+      >
+        MUDASSIR
+      </div>
+    </div>
+
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

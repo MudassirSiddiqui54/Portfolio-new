@@ -8,9 +8,9 @@ const InsideSection = forwardRef((_, ref) => {
 			<AsciiRain
 				textColor="#BBAAF5"
 				bgColor="rgba(3, 4, 7, 0.08)"
-				speed={50}
+				speed={60}
 				opacity={80}
-				fontSize={18}
+				fontSize={20}
 			/>
 		</section>
 	);

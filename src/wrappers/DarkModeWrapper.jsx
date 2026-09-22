@@ -15,7 +15,7 @@ const DarkModeWrapper = () => {
 				opacity={0.75}
 				color="#00f5ff"
 				trackColor="#3b4a55"
-				glowStrokeWidth={25}
+				glowStrokeWidth={18}
 				triggerRef={wrapperRef}
 			/>
 			<div className="relative z-10">

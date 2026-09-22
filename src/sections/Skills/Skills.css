@@ -8,7 +8,13 @@
   from { transform: translateX(-33.333%); }
   to   { transform: translateX(0); }
 }
+.marquee-track {
+	animation-play-state: paused;
+}
 
+.skills-section.is-visible .marquee-track {
+	animation-play-state: running;
+}
 /* ---- Card base ---- */
 .card {
   position: relative;
@@ -52,4 +58,24 @@
   box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.4),
     0 0 30px rgba(187, 170, 245, 0.2);
+}
+
+@media (max-width: 768px) {
+	.bento-section {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+	}
+
+	.bento-section .card {
+		grid-column: span 1 !important;
+	}
+
+	/* 3rd card = full width */
+	.bento-section .card:nth-child(3) {
+		grid-column: span 2 !important;
+	}
+
+	/* 6th card = full width */
+	.bento-section .card:nth-child(6) {
+		grid-column: span 2 !important;
+	}
 }

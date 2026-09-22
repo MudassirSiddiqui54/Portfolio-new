@@ -20,23 +20,20 @@ export default function About() {
 				{/* --- Content Grid: Card left, Paragraph right --- */}
 				<div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
 					{/* Left: 3D Card */}
-					<div className="md:col-span-5 flex justify-center md:justify-start">
+					<div className="md:col-span-4 flex justify-center md:justify-start">
 						<AboutCard />
 					</div>
 
 					{/* Right: Revealed Paragraph */}
 					<div className="md:col-span-7">
-						<RevealText className="text-2xl md:text-3xl leading-relaxed text-gray-800 font-mono">
+						<RevealText className="text-lg leading-[1.5] md:text-2xl md:leading-relaxed text-gray-800 font-mono">
 							I'm a third-year Engineering student at KJ Somaiya
 							Institute of Technology, specializing in Artificial
 							Intelligence and Data Science. I have a strong
 							passion for coding, full-stack web development, and
 							solving challenging problems on LeetCode. I enjoy
 							building applications that are not only functional
-							but also thoughtfully designed. When I'm not writing
-							code, I'm exploring new technologies in the ML and
-							AI, always looking for the next problem worth
-							solving.
+							but also thoughtfully designed.
 						</RevealText>
 					</div>
 				</div>

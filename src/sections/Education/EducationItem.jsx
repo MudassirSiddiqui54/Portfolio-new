@@ -18,7 +18,9 @@ export default function EducationItem({ data, index }) {
 
 			if (!card || !node) return;
 
-			const fromX = side === "left" ? -80 : 80;
+			const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+			const fromX = isMobile ? 80 : side === "left" ? -80 : 80;
 
 			/* Card entrance */
 			gsap.fromTo(

@@ -1,20 +1,30 @@
 import RotatingText from "../components/RotatingText"; // Ensure this path is correct
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const NameLine = ({ text, isOutline, indentClass = "" }) => {
-	const [activeLetter, setActiveLetter] = useState(null);
+	const [activeLetters, setActiveLetters] = useState(new Set());
+
+	const timersRef = useRef({});
 
 	const handleMouseEnter = (index) => {
-		setActiveLetter(index);
-	};
+		setActiveLetters((prev) => {
+			const next = new Set(prev);
+			next.add(index);
+			return next;
+		});
 
-	const handleAnimationEnd = (index) => {
-		// Only remove the class if this is still
-		// the currently animated letter.
-		if (activeLetter === index) {
-			setActiveLetter(null);
-		}
+		clearTimeout(timersRef.current[index]);
+
+		timersRef.current[index] = setTimeout(() => {
+			setActiveLetters((prev) => {
+				const next = new Set(prev);
+				next.delete(index);
+				return next;
+			});
+
+			delete timersRef.current[index];
+		}, 650);
 	};
 
 	return (
@@ -25,10 +35,9 @@ const NameLine = ({ text, isOutline, indentClass = "" }) => {
 				<span
 					key={index}
 					className={`letter ${
-						activeLetter === index ? "wobble" : ""
+						activeLetters.has(index) ? "wobble" : ""
 					}`}
 					onMouseEnter={() => handleMouseEnter(index)}
-					onAnimationEnd={() => handleAnimationEnd(index)}
 					style={{
 						color: isOutline ? "transparent" : "#111827",
 						WebkitTextStroke: isOutline ? "2px #111827" : "none",
